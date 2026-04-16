@@ -23,8 +23,7 @@ MoneySignal Agent Brain의 **Phase 0-3**를 구현한다.
 ## 입력/출력 프로토콜
 ### 입력
 - `docs/superpowers/specs/2026-04-16-moneysignal-agent-brain-spec.md`
-- `.omc/plans/2026-04-16-moneysignal-agent-brain-plan.md`
-- `.omc/plans/2026-04-16-moneysignal-agent-brain-task-breakdown.md`
+- 현재 세션에서 승인된 구현 plan/task breakdown
 
 ### 주 구현 파일
 - `services/brain/docs/adrs/ADR-001-v1-defaults.md`
