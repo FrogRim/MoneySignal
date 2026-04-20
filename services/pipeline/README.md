@@ -80,6 +80,7 @@ fixture 또는 source 입력을 기준으로 feed를 재생성합니다.
 | `PIPELINE_INTERNAL_REBUILD_TOKEN` | 비어 있음 | production에서 `/internal/rebuild-feed` 호출 시 필요한 내부 토큰 |
 | `PIPELINE_FEED_STORE_PATH` | `~/.moneysignal/pipeline/feed-store.json` | feed store 파일 경로 |
 | `PIPELINE_SESSION_STATUS` | `active` | miniapp session 상태 override |
+| `PIPELINE_CORS_ALLOW_ORIGINS` | 비어 있음 | miniapp이 호출할 수 있도록 허용할 origin 목록(`,` 구분) |
 
 ## review / staging 기준
 

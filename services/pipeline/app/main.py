@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Annotated, Any
 
 from fastapi import FastAPI, Header
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from httpx import AsyncBaseTransport, AsyncClient, ConnectError, TimeoutException
 from pydantic import ValidationError
@@ -28,6 +29,22 @@ from app.services.feed_store import FileFeedStore
 app = FastAPI(title="MoneySignal Pipeline", version="0.1.0")
 _FIXTURE_PATH = Path(__file__).resolve().parent.parent / "fixtures" / "candidates.json"
 _LOCAL_PIPELINE_ENVS = {"local", "demo", "development", "test"}
+
+
+def cors_allow_origins() -> list[str]:
+    raw_value = os.getenv("PIPELINE_CORS_ALLOW_ORIGINS", "").strip()
+    if not raw_value:
+        return []
+    return [origin.strip() for origin in raw_value.split(",") if origin.strip()]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_allow_origins(),
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 
 def feed_store_path() -> Path:

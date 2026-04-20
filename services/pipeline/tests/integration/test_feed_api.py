@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import json
 
 import pytest
@@ -576,6 +577,21 @@ async def test_get_session_defaults_to_active_for_unknown_status(monkeypatch) ->
 
     assert response.status_code == 200
     assert response.json() == {"status": "active"}
+
+
+async def test_get_session_returns_cors_headers_for_allowed_origin(monkeypatch) -> None:
+    monkeypatch.setenv("PIPELINE_CORS_ALLOW_ORIGINS", "https://app.moneysignal.lol")
+    reloaded_module = importlib.reload(main_module)
+    transport = ASGITransport(app=reloaded_module.app)
+
+    async with AsyncClient(transport=transport, base_url="http://testserver") as client:
+        response = await client.get(
+            "/session",
+            headers={"Origin": "https://app.moneysignal.lol"},
+        )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "https://app.moneysignal.lol"
 
 
 async def test_get_signal_returns_not_found_error_for_unknown_id() -> None:

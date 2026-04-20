@@ -33,6 +33,7 @@ services:
       PIPELINE_INTERNAL_REBUILD_TOKEN: ${PIPELINE_INTERNAL_REBUILD_TOKEN:-change-me}
       PIPELINE_FEED_STORE_PATH: ${PIPELINE_FEED_STORE_PATH:-/data/feed-store.json}
       PIPELINE_SESSION_STATUS: ${PIPELINE_SESSION_STATUS:-active}
+      PIPELINE_CORS_ALLOW_ORIGINS: ${PIPELINE_CORS_ALLOW_ORIGINS:-}
     volumes:
       - pipeline_data:/data
     depends_on:
