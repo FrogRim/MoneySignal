@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class ErrorCode(str, Enum):
     INVALID_REQUEST = "invalid_request"
+    RATE_LIMITED = "rate_limited"
     UPSTREAM_TIMEOUT = "upstream_timeout"
     UPSTREAM_UNAVAILABLE = "upstream_unavailable"
     ANALYSIS_FAILED = "analysis_failed"

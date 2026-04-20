@@ -78,10 +78,12 @@ async def test_post_evaluate_rejects_invalid_request_with_structured_error() -> 
     del payload["candidate_id"]
 
     response = await post_evaluate_signal(payload)
+    body = response.json()
 
     assert response.status_code == 422
+    assert response.headers["x-request-id"] == body["error"]["trace_id"]
     assert_error_envelope(
-        response.json(),
+        body,
         code="invalid_request",
         retryable=False,
         failed_agents=[],
@@ -175,6 +177,7 @@ async def test_post_evaluate_maps_unexpected_failure_to_internal_error(
     body = response.json()
 
     assert response.status_code == 500
+    assert response.headers["x-request-id"] == body["error"]["trace_id"]
     assert_error_envelope(
         body,
         code="internal_error",
