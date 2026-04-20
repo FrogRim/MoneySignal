@@ -88,7 +88,8 @@ describe('App', () => {
     expect(screen.getByText('왜 봐야 하나요')).toBeInTheDocument();
     expect(screen.getByText('리스크')).toBeInTheDocument();
     expect(screen.getByText('다음에 볼 포인트')).toBeInTheDocument();
-    expect(screen.getByText('chart · positive · 0.78')).toBeInTheDocument();
+    expect(screen.getByText('신뢰도: 76%')).toBeInTheDocument();
+    expect(screen.getByText('chart · positive · 78%')).toBeInTheDocument();
   });
 
   it('renders a reassuring empty state when feed is empty', async () => {

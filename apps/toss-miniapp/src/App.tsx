@@ -69,6 +69,10 @@ type ViewState =
 
 const apiBaseUrl = import.meta.env.VITE_PIPELINE_BASE_URL ?? '';
 
+function formatConfidencePercent(confidence: number): string {
+  return `${Math.round(confidence * 100)}%`;
+}
+
 function getHost(): MoneySignalHost | null {
   if (typeof window === 'undefined') {
     return null;
@@ -295,7 +299,7 @@ function renderFeed(props: FeedSectionProps) {
           <div className="feed-item__header">
             <strong>{item.title}</strong>
             <span className="feed-item__meta">
-              {item.asset.name} · {item.asset.symbol} · 신뢰도 {item.confidence.toFixed(2)}
+              {item.asset.name} · {item.asset.symbol} · 신뢰도: {formatConfidencePercent(item.confidence)}
             </span>
           </div>
           <p className="feed-item__summary">{item.summary}</p>
@@ -423,10 +427,10 @@ function renderDetail(props: DetailSectionProps) {
       <div>
         <h2>판단 근거</h2>
         <div className="metric-row">
-          <span className="badge">신뢰도 {props.detailSignal.confidence.toFixed(2)}</span>
+          <span className="badge">신뢰도: {formatConfidencePercent(props.detailSignal.confidence)}</span>
           {props.detailSignal.agent_votes.map((vote) => (
             <span key={`${vote.agent}-${vote.stance}`} className="badge">
-              {vote.agent} · {vote.stance} · {vote.confidence.toFixed(2)}
+              {vote.agent} · {vote.stance} · {formatConfidencePercent(vote.confidence)}
             </span>
           ))}
         </div>
