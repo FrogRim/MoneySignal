@@ -14,7 +14,7 @@
     "news_items": [
       {
         "id": "news_fixture_001",
-        "headline": "fixture headline"
+        "headline": "외국인 매수와 거래량이 함께 늘어난 삼성전자"
       }
     ],
     "flow_snapshot": {
@@ -37,22 +37,22 @@
           },
           "signal_card": {
             "id": "sig_fixture_001",
-            "title": "Fixture title",
+            "title": "삼성전자 흐름을 다시 볼 시점이에요",
             "asset": {
               "symbol": "005930",
               "name": "삼성전자",
               "market": "KR"
             },
             "signal_strength": "watch",
-            "summary": "Fixture summary",
+            "summary": "거래량과 외국인 수급이 함께 붙으면서 오늘 흐름을 다시 확인할 이유가 생겼어요.",
             "reasons": [
-              "reason 1",
-              "reason 2"
+              "외국인 순매수가 늘고 있어요",
+              "거래량이 평소보다 강하게 붙고 있어요"
             ],
             "risks": [
-              "risk 1"
+              "장중 변동성이 커질 수 있어요"
             ],
-            "watch_action": "watch this",
+            "watch_action": "거래량이 끝까지 유지되는지 먼저 확인해 보세요.",
             "broker_deeplink_hint": {
               "broker": "toss_securities",
               "symbol": "005930"
