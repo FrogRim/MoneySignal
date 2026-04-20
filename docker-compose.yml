@@ -1,0 +1,63 @@
+services:
+  caddy:
+    image: caddy:2.9-alpine
+    restart: unless-stopped
+    depends_on:
+      - miniapp
+      - pipeline
+    environment:
+      MINIAPP_HOST: ${MINIAPP_HOST:-app.localhost}
+      PIPELINE_HOST: ${PIPELINE_HOST:-api.localhost}
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  miniapp:
+    build:
+      context: ./apps/toss-miniapp
+      args:
+        VITE_PIPELINE_BASE_URL: ${MINIAPP_PIPELINE_BASE_URL:-http://api.localhost:8080}
+    restart: unless-stopped
+
+  pipeline:
+    build:
+      context: ./services/pipeline
+    restart: unless-stopped
+    environment:
+      PIPELINE_ENV: ${PIPELINE_ENV:-production}
+      PIPELINE_BRAIN_BASE_URL: ${PIPELINE_BRAIN_BASE_URL:-http://brain:8000}
+      PIPELINE_INTERNAL_REBUILD_TOKEN: ${PIPELINE_INTERNAL_REBUILD_TOKEN:-change-me}
+      PIPELINE_FEED_STORE_PATH: ${PIPELINE_FEED_STORE_PATH:-/data/feed-store.json}
+      PIPELINE_SESSION_STATUS: ${PIPELINE_SESSION_STATUS:-active}
+    volumes:
+      - pipeline_data:/data
+    depends_on:
+      - brain
+
+  brain:
+    build:
+      context: ./services/brain
+    restart: unless-stopped
+    environment:
+      BRAIN_REQUEST_ID_HEADER_NAME: ${BRAIN_REQUEST_ID_HEADER_NAME:-x-request-id}
+      BRAIN_CORS_ALLOW_ORIGINS: ${BRAIN_CORS_ALLOW_ORIGINS:-}
+      BRAIN_CORS_ALLOW_CREDENTIALS: ${BRAIN_CORS_ALLOW_CREDENTIALS:-false}
+      BRAIN_TRUSTED_HOSTS: ${BRAIN_TRUSTED_HOSTS:-brain,localhost,127.0.0.1}
+      BRAIN_RATE_LIMIT_ENABLED: ${BRAIN_RATE_LIMIT_ENABLED:-false}
+      BRAIN_RATE_LIMIT_TRUST_X_FORWARDED_FOR: ${BRAIN_RATE_LIMIT_TRUST_X_FORWARDED_FOR:-false}
+      BRAIN_RATE_LIMIT_TRUSTED_PROXY_CLIENTS: ${BRAIN_RATE_LIMIT_TRUSTED_PROXY_CLIENTS:-}
+      BRAIN_RATE_LIMIT_WINDOW_SECONDS: ${BRAIN_RATE_LIMIT_WINDOW_SECONDS:-60}
+      BRAIN_RATE_LIMIT_MAX_REQUESTS: ${BRAIN_RATE_LIMIT_MAX_REQUESTS:-60}
+      BRAIN_BRIEFING_THRESHOLD: ${BRAIN_BRIEFING_THRESHOLD:-0.55}
+      BRAIN_INSTANT_PUSH_THRESHOLD: ${BRAIN_INSTANT_PUSH_THRESHOLD:-0.8}
+      BRAIN_SPECIALIST_CONCURRENCY_LIMIT: ${BRAIN_SPECIALIST_CONCURRENCY_LIMIT:-4}
+      BRAIN_PER_AGENT_TIMEOUT_MS: ${BRAIN_PER_AGENT_TIMEOUT_MS:-3000}
+
+volumes:
+  pipeline_data:
+  caddy_data:
+  caddy_config:

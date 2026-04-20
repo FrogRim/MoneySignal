@@ -1,0 +1,15 @@
+{
+    auto_https disable_redirects
+}
+
+{$MINIAPP_HOST:app.localhost} {
+    reverse_proxy miniapp:80
+}
+
+{$PIPELINE_HOST:api.localhost} {
+    reverse_proxy pipeline:8010
+}
+
+:80 {
+    respond "MoneySignal reverse proxy is running" 200
+}

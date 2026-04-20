@@ -1,0 +1,79 @@
+[
+  {
+    "candidate_id": "cand_fixture_001",
+    "asset": {
+      "symbol": "005930",
+      "name": "삼성전자",
+      "market": "KR"
+    },
+    "trigger_type": "price_volume_breakout",
+    "event_ts": "2026-04-19T09:00:00+00:00",
+    "market_snapshot": {
+      "price_change_pct": 2.9
+    },
+    "news_items": [
+      {
+        "id": "news_fixture_001",
+        "headline": "fixture headline"
+      }
+    ],
+    "flow_snapshot": {
+      "foreign_net_buy": 1100000000
+    },
+    "theme_context": [
+      {
+        "theme": "ai"
+      }
+    ],
+    "metadata": {
+      "gate_score": 0.74,
+      "event_ref": "evt_fixture_001",
+      "stub_agent_outputs": {
+        "brain": {
+          "decision": "briefing",
+          "gate": {
+            "score": 0.74,
+            "reason": "fixture briefing threshold passed"
+          },
+          "signal_card": {
+            "id": "sig_fixture_001",
+            "title": "Fixture title",
+            "asset": {
+              "symbol": "005930",
+              "name": "삼성전자",
+              "market": "KR"
+            },
+            "signal_strength": "watch",
+            "summary": "Fixture summary",
+            "reasons": [
+              "reason 1",
+              "reason 2"
+            ],
+            "risks": [
+              "risk 1"
+            ],
+            "watch_action": "watch this",
+            "broker_deeplink_hint": {
+              "broker": "toss_securities",
+              "symbol": "005930"
+            },
+            "agent_votes": [
+              {
+                "agent": "chart",
+                "stance": "positive",
+                "confidence": 0.78
+              }
+            ],
+            "confidence": 0.76,
+            "evidence_refs": [
+              {
+                "type": "market_event",
+                "ref": "evt_fixture_001"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+]
